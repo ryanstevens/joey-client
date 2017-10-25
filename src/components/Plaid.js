@@ -34,7 +34,7 @@ Plaid.defaultProps = {
   webhook: '',
   publicKey: 'ff962d1c86d7e4f7a273ffffaae5d4',
   style: {
-    marginTop: 30
+    marginTop: 23
   }
 };
 
