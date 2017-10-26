@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, StatusBarIOS, Platform } from 'react-native';
 import Plaid from '@components/Plaid';
+import Welcome from '@components/welcome';
 
 export default class App extends Component {
 
@@ -10,12 +11,11 @@ export default class App extends Component {
       view: 'login'
     };
   }
-
   render() {
     if (this.state.view === 'login') {
       return (
         <View style={styles.container}>
-          <Text onPress = {this.press}>Beeps</Text>
+          <Welcome.component onPress = {this.press} />
         </View>
       );
     }
