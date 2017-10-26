@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, StatusBarIOS, Platform } from 'react-native';
-import  Plaid from './components/Plaid';
-
+import Plaid from '@components/Plaid';
 
 export default class App extends Component {
 
@@ -16,7 +15,7 @@ export default class App extends Component {
     if (this.state.view === 'login') {
       return (
         <View style={styles.container}>
-          <Text onPress = {this.press}>Beep</Text>
+          <Text onPress = {this.press}>Beeps</Text>
         </View>
       );
     }
