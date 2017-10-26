@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, StatusBarIOS, Platform } from 'react-native';
-import Plaid from '@components/Plaid';
+import Plaid from '@components/plaid';
 import Welcome from '@components/welcome';
 
 export default class App extends Component {
