@@ -21,7 +21,7 @@ export default class App extends Component {
     }
     else {
       return (
-        <Plaid  
+        <Plaid.component  
            onMessage = {this.onMessage}
         />
       )
