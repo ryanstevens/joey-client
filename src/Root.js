@@ -5,31 +5,9 @@ import Welcome from '@components/welcome';
 import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux';
 import appReducers from 'reducers';
-console.log(appReducers)
-const rootReducer = (state, action) => {
-  return appReducers(state, action);
-};
 
-const store = createStore(rootReducer);
 
-class Foo extends Component {
- 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return <View>
-      <Text>hi</Text>
-      <Text>hi</Text>
-      <Text>hi</Text>
-      <Text>hi</Text>
-      <Text>hi</Text>
-      <Text>hi</Text>
-      <Text>hi</Text>
-    </View>;
-  }
-}
+const store = createStore(appReducers);
 
 export default class App extends Component {
 
@@ -42,7 +20,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Foo />
+        <Welcome.component onPress={this.press} />
       </Provider>
     ) 
       // if (this.state.view === 'login') {
@@ -60,6 +38,7 @@ export default class App extends Component {
   }
 
   press = () => {
+    console.log('hi')
     this.setState({view: 'plaid'});
   }
 
