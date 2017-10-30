@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#ecf0f1'
   }
 });
