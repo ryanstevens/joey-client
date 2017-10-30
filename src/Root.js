@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import Plaid from '@components/plaid';
-import Welcome from '@components/welcome';
+import { components } from '@components';
 import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux';
 import reducers from 'reducers';
 
 
+const store = createStore(function rootReducer(state, action) {
+  var state =  reducers(state, action);
+  console.log('State', state);
+  return state
+});
+
 export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.store = createStore(function rootReducer(state, action) {
-      return reducers(state, action);
-    });
-
-    console.log("STATE", this.store.getState());
   }
 
   render() {
     return (
-      <Provider store={this.store}>
+      <Provider store={store}>
         <View style={styles.container}>
-          <Welcome.component />
-          <Plaid.component  />
+          <components.welcome />
+          <components.plaid />
+          <components.navigation />
         </View>
       </Provider>
     ) 
@@ -37,7 +38,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1'
+    justifyContent: 'space-between',
+    backgroundColor: '#ecf0f1',
+    zIndex:0
   }
 });
