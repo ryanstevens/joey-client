@@ -1,45 +1,56 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { components } from '@components';
-import { Provider } from 'react-redux'
+import { components, reducers } from '@components';
+import { Provider, connect } from 'react-redux'
 import { combineReducers, createStore } from 'redux';
-import reducers from 'reducers';
+import { StackNavigator } from 'react-navigation';
+import { addNavigationHelpers } from 'react-navigation';
 
-
-const store = createStore(function rootReducer(state, action) {
-  var state =  reducers(state, action);
-  console.log('State', state);
-  return state
+const AppNavigator = StackNavigator({
+  welcome: {
+    screen: components.welcome
+  },
+  plaid: {
+    screen: components.plaid
+  }
 });
 
-export default class App extends Component {
+const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('welcome'));
 
-  constructor(props) {
-    super(props);
-  }
+const navReducer = (state = initialState, action) => {
+  const nextState = AppNavigator.router.getStateForAction(action, state);
+  return nextState || state;
+};
 
+const store = createStore(combineReducers(Object.assign(
+  {}, 
+  reducers,
+  { nav: navReducer }
+)));
+
+class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <components.welcome />
-          <components.plaid />
-          <components.navigation />
-        </View>
-      </Provider>
-    ) 
+      <AppNavigator navigation={addNavigationHelpers({
+        dispatch: this.props.dispatch,
+        state: this.props.nav,
+      })} />
+    );
   }
-
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#ecf0f1',
-    zIndex:0
-  }
+const mapStateToProps = (state) => ({
+  nav: state.nav
 });
+
+const AppWithNavigationState = connect(mapStateToProps)(App);
+
+
+// we only really need export a function here
+export default () => {
+
+  return <Provider store={store}>
+    <AppWithNavigationState />
+  </Provider>;
+
+}
