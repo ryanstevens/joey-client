@@ -1,56 +1,53 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { components, reducers } from '@components';
+import reducers from 'reducers';
+import { components } from '@components';
 import { Provider, connect } from 'react-redux'
 import { combineReducers, createStore } from 'redux';
-import { StackNavigator } from 'react-navigation';
-import { addNavigationHelpers } from 'react-navigation';
 
-const AppNavigator = StackNavigator({
-  welcome: {
-    screen: components.welcome
-  },
-  plaid: {
-    screen: components.plaid
-  }
-});
+const Navigation = components.nav;
 
-const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('welcome'));
+// const AppNavigator = StackNavigator({
+//   welcome: {
+//     screen: components.welcome
+//   },
+//   plaid: {
+//     screen: components.plaid
+//   }
+// });
 
-const navReducer = (state = initialState, action) => {
-  const nextState = AppNavigator.router.getStateForAction(action, state);
-  return nextState || state;
-};
+// const initialState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('welcome'));
 
-const store = createStore(combineReducers(Object.assign(
-  {}, 
-  reducers,
-  { nav: navReducer }
-)));
+// const navReducer = (state = initialState, action) => {
+//   const nextState = AppNavigator.router.getStateForAction(action, state);
+//   return nextState || state;
+// };
 
-class App extends React.Component {
-  render() {
-    return (
-      <AppNavigator navigation={addNavigationHelpers({
-        dispatch: this.props.dispatch,
-        state: this.props.nav,
-      })} />
-    );
-  }
-}
+// const store = createStore(combineReducers(Object.assign(
+//   {}, 
+//   reducers,
+//   { nav: navReducer }
+// )));
 
-const mapStateToProps = (state) => ({
-  nav: state.nav
-});
+// class App extends React.Component {
+//   render() {
+//     return (
+//       <AppNavigator navigation={addNavigationHelpers({
+//         dispatch: this.props.dispatch,
+//         state: this.props.nav,
+//       })} />
+//     );
+//   }
+// }
 
-const AppWithNavigationState = connect(mapStateToProps)(App);
 
+const store = createStore(reducers);
 
 // we only really need export a function here
 export default () => {
 
   return <Provider store={store}>
-    <AppWithNavigationState />
+    <Navigation />
   </Provider>;
 
 }
