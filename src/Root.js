@@ -5,14 +5,19 @@ import { components } from '@components';
 import { Provider, connect } from 'react-redux'
 import { combineReducers, createStore } from 'redux';
 
-const Navigation = components.nav;
-const store = createStore(reducers);
+const store = createStore(function(state, action) {
+  let newState = reducers(state, action);
+  console.log('\n\n\n\n*********************************\n\nAction', action);
+  console.log('Prev state', state);
+  console.log('New State', newState);
+  return newState;
+});
+
 
 // we only really need export a function here
 export default () => {
-
   return <Provider store={store}>
-    <Navigation />
-  </Provider>;
+             <components.top_nav />
+        </Provider>;
 
 }
