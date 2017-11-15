@@ -13,7 +13,6 @@ const store = createStore(function(state, action) {
   return newState;
 });
 
-
 // we only really need export a function here
 export default () => {
   return <Provider store={store}>
